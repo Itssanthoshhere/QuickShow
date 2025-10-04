@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 
 const Footer = () => {
@@ -28,30 +29,24 @@ const Footer = () => {
         <div className="flex-1 flex items-start md:justify-end gap-20 md:gap-40">
           <div>
             <h2 className="font-semibold mb-5">Quick Links</h2>
+
             <ul className="text-sm space-y-2">
-// At the top of client/src/components/Footer.jsx
-import { Link } from "react-router-dom";
-import { assets } from "../assets/assets";
-
-// …
-
-             <ul className="text-sm space-y-2">
-               <li>
-                 <Link to="/">Home</Link>
-               </li>
-               <li>
-                 <Link to="/movies">Movies</Link>
-               </li>
-               <li>
-                 <Link to="/theaters">Theaters</Link>
-               </li>
-               <li>
-                 <Link to="/favourite">Favourites</Link>
-               </li>
-               <li>
-                 <Link to="/contact">Contact</Link>
-               </li>
-             </ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/movies">Movies</Link>
+              </li>
+              <li>
+                <Link to="/theaters">Theaters</Link>
+              </li>
+              <li>
+                <Link to="/favourite">Favourites</Link>
+              </li>
+              <li>
+                <Link to="/contact">Contact</Link>
+              </li>
+            </ul>
           </div>
           <div>
             <h2 className="font-semibold mb-5">Contact Us</h2>
