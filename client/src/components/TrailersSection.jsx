@@ -5,8 +5,19 @@ import BlurCircle from "./BlurCircle";
 import { PlayCircleIcon } from "lucide-react";
 
 const TrailersSection = () => {
-  const [currentTrailer, setCurrentTrailer] = useState(dummyTrailers[0]);
-
+  const [currentTrailer, setCurrentTrailer] = useState(
+    dummyTrailers?.[0] || null
+  );
+  if (!dummyTrailers || dummyTrailers.length === 0) {
+    return (
+      <div className="px-6 md:px-16 lg:px-24 xl:px-44 py-20">
+        <p className="text-gray-300 font-medium text-lg max-w-[960px] mx-auto">
+          No trailers available
+        </p>
+      </div>
+    );
+  }
+  
   return (
     <div className="px-6 md:px-16 lg:px-24 xl:px-44 py-20 overflow-hidden">
       <p className="text-gray-300 font-medium text-lg max-w-[960px] mx-auto">
