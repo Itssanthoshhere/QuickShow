@@ -20,12 +20,17 @@ const MovieCard = ({ movie }) => {
       <p className="font-semibold mt-2 truncate">{movie.title}</p>
 
       <p className="text-sm text-gray-400 mt-2">
-        {new Date(movie.release_date).getFullYear()} •
-        {movie.genres
-          .slice(0, 2)
-          .map((genre) => genre.name)
-          .join(" | ")}
-        • {timeFormat(movie.runtime)}
+        {movie.release_date
+          ? new Date(movie.release_date).getFullYear()
+          : "N/A"}{" "}
+        •
+        {movie.genres && movie.genres.length > 0
+          ? movie.genres
+              .slice(0, 2)
+              .map((genre) => genre.name)
+              .join(" | ")
+          : "N/A"}
+        • {movie.runtime ? timeFormat(movie.runtime) : "N/A"}
       </p>
 
       <div className="flex items-center justify-between mt-4 pb-3">
