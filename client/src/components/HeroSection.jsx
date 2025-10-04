@@ -25,10 +25,10 @@ const HeroSection = () => {
       </div>
 
       <p className="max-w-md text-gray-300">
-        In a post-apocalyptic world where cities ride on wheels and consume each
-        other to survive, two people meet in London and try to stop a
-        conspiracy.
+        A group of intergalactic misfits bands together to protect the galaxy
+        from a powerful villain who threatens the entire universe.
       </p>
+      
       <button
         onClick={() => navigate("/movies")}
         className="flex items-center gap-1 px-6 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer"
