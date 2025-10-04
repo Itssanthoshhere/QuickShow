@@ -29,22 +29,29 @@ const Footer = () => {
           <div>
             <h2 className="font-semibold mb-5">Quick Links</h2>
             <ul className="text-sm space-y-2">
-              <li>
-                <a href="/">Home</a>
-              </li>
-              <li>
-                <a href="/movies">Movies</a>
-              </li>
-              <li>
-                <a href="/theaters">Theaters</a>
-              </li>
-              <li>
-                <a href="/favourite">Favourites</a>
-              </li>
-              <li>
-                <a href="/contact">Contact</a>
-              </li>
-            </ul>
+// At the top of client/src/components/Footer.jsx
+import { Link } from "react-router-dom";
+import { assets } from "../assets/assets";
+
+// …
+
+             <ul className="text-sm space-y-2">
+               <li>
+                 <Link to="/">Home</Link>
+               </li>
+               <li>
+                 <Link to="/movies">Movies</Link>
+               </li>
+               <li>
+                 <Link to="/theaters">Theaters</Link>
+               </li>
+               <li>
+                 <Link to="/favourite">Favourites</Link>
+               </li>
+               <li>
+                 <Link to="/contact">Contact</Link>
+               </li>
+             </ul>
           </div>
           <div>
             <h2 className="font-semibold mb-5">Contact Us</h2>
