@@ -13,7 +13,7 @@ const MovieCard = ({ movie }) => {
           scrollTo(0, 0);
         }}
         src={movie.backdrop_path}
-        alt=""
+        alt={`${movie.title} movie poster`}
         className="rounded-lg h-52 w-full object-cover object-right-bottom cursor-pointer"
       />
 
