@@ -70,7 +70,12 @@ const Footer = () => {
       </div>
       <p className="pt-4 text-center text-sm pb-5">
         &copy; {new Date().getFullYear()} QuickShow. Made with ❤️ by{" "}
-        <a href="https://github.com/Itssanthoshhere" className="underline">
+        <a
+          href="https://github.com/Itssanthoshhere"
+          className="underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Itssanthoshhere
         </a>
         . All rights reserved.
