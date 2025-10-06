@@ -13,7 +13,7 @@ const MovieDetails = () => {
   const { id } = useParams();
   const [show, setShow] = useState(null);
 
-  const getShow = async () => {
+  const getShow = () => {
     const show = dummyShowsData.find((show) => show._id === id);
     if (show) {
       setShow({
