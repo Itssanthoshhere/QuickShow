@@ -81,7 +81,7 @@ const SeatLayout = () => {
         <p className="text-lg font-semibold px-6">Available Timings</p>
 
         <div className="mt-5 space-y-1">
-          {show.dateTime[date].map((item) => (
+          {(Array.isArray(show?.dateTime?.[date]) ? show.dateTime[date] : []).map((item) => (
             <div
               key={item.time}
               onClick={() => setSelectedTime(item)}
