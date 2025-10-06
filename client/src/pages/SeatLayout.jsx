@@ -23,13 +23,16 @@ const SeatLayout = () => {
 
   const navigate = useNavigate();
 
-  const getShow = async () => {
+  const getShow = () => {
     const show = dummyShowsData.find((show) => show._id === id);
     if (show) {
       setShow({
         movie: show,
         dateTime: dummyDateTimeData,
       });
+    } else {
+      toast.error("Show not found");
+      navigate("/");
     }
   };
 
@@ -81,7 +84,10 @@ const SeatLayout = () => {
         <p className="text-lg font-semibold px-6">Available Timings</p>
 
         <div className="mt-5 space-y-1">
-          {(Array.isArray(show?.dateTime?.[date]) ? show.dateTime[date] : []).map((item) => (
+          {(Array.isArray(show?.dateTime?.[date])
+            ? show.dateTime[date]
+            : []
+          ).map((item) => (
             <div
               key={item.time}
               onClick={() => setSelectedTime(item)}
