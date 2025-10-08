@@ -34,8 +34,7 @@ const AdminSideBar = () => {
       />
 
       <p className="mt-2 text-base max-md:hidden">
-        {user.firstName}
-        {user.lastName}
+        {user.firstName} {user.lastName}
       </p>
 
       <div className="w-full">
