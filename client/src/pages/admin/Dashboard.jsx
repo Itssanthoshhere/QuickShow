@@ -88,7 +88,7 @@ const Dashboard = () => {
           >
             <img
               src={show.movie.poster_path}
-              alt=""
+              alt={`${show.movie.title} poster`}
               className="h-60 w-full object-cover"
             />
             <p className="font-medium p-2 truncate">{show.movie.title}</p>
