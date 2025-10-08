@@ -9,7 +9,7 @@ import { assets } from "../../assets/assets";
 
 const AdminSideBar = () => {
   const user = {
-    firstName: "Admin ",
+    firstName: "Admin",
     lastName: "User",
     imageUrl: assets.profile,
   };
