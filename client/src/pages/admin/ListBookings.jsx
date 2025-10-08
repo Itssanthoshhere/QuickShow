@@ -10,7 +10,7 @@ const ListBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getAllBookings = async () => {
+  const getAllBookings = () => {
     setBookings(dummyBookingData);
     setIsLoading(false);
   };
