@@ -18,7 +18,12 @@ const syncUserCreation = inngest.createFunction(
       image: image_url,
     };
 
-    await User.create(userData);
+    try {
+      await User.create(userData);
+    } catch (error) {
+      console.error('Failed to create user:', error);
+      throw error; // Inngest will retry
+    }
   }
 );
 
