@@ -27,8 +27,18 @@ const syncUserDeletion = inngest.createFunction(
   { id: "delete-user-with-clerk" },
   { event: "clerk/user.deleted" },
   async ({ event }) => {
-    const { id } = event.data;
-    await User.findByIdAndDelete(id);
+async ({ event }) => {
+  const { id } = event.data;
+  try {
+    const result = await User.findByIdAndDelete(id);
+    if (!result) {
+      console.warn(`User with id ${id} not found for deletion`);
+    }
+  } catch (error) {
+    console.error('Failed to delete user:', error);
+    throw error;
+  }
+}
   }
 );
 
