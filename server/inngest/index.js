@@ -48,8 +48,9 @@ async ({ event }) => {
 );
 
 // Inngest Function to update user data in database
+ // Inngest Function to update user data in database
  const syncUserUpdation = inngest.createFunction(
-const syncUserUpdation = inngest.createFunction(
+   { id: "update-user-from-clerk" },
   { id: "update-user-from-clerk" },
   { event: "clerk/user.updated" },
   async ({ event }) => {
