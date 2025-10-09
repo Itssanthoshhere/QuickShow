@@ -21,7 +21,7 @@ const syncUserCreation = inngest.createFunction(
     try {
       await User.create(userData);
     } catch (error) {
-      console.error('Failed to create user:', error);
+      console.error("Failed to create user:", error);
       throw error; // Inngest will retry
     }
   }
@@ -32,25 +32,21 @@ const syncUserDeletion = inngest.createFunction(
   { id: "delete-user-with-clerk" },
   { event: "clerk/user.deleted" },
   async ({ event }) => {
-async ({ event }) => {
-  const { id } = event.data;
-  try {
-    const result = await User.findByIdAndDelete(id);
-    if (!result) {
-      console.warn(`User with id ${id} not found for deletion`);
+    const { id } = event.data;
+    try {
+      const result = await User.findByIdAndDelete(id);
+      if (!result) {
+        console.warn(`User with id ${id} not found for deletion`);
+      }
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+      throw error;
     }
-  } catch (error) {
-    console.error('Failed to delete user:', error);
-    throw error;
-  }
-}
   }
 );
 
 // Inngest Function to update user data in database
- // Inngest Function to update user data in database
- const syncUserUpdation = inngest.createFunction(
-   { id: "update-user-from-clerk" },
+const syncUserUpdation = inngest.createFunction(
   { id: "update-user-from-clerk" },
   { event: "clerk/user.updated" },
   async ({ event }) => {
