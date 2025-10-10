@@ -3,6 +3,7 @@ import { assets } from "../assets/assets";
 import { MenuIcon, SearchIcon, TicketPlus, XIcon } from "lucide-react";
 import { useState } from "react";
 import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
+import { useAppContext } from "../context/AppContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,10 +12,12 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
+  const { favouriteMovies } = useAppContext();
+
   return (
-    <div className="fixed top-0 left-0 z-50 w-full flex items-center justify-between px-6 md:px-16 lg:px-36 py-5">
+    <div className="fixed top-0 left-0 z-50 flex items-center justify-between w-full px-6 py-5 md:px-16 lg:px-36">
       <Link to="/" className="max-md:flex-1">
-        <img src={assets.logo} alt="" className="w-36 h-auto" />
+        <img src={assets.logo} alt="" className="h-auto w-36" />
       </Link>
 
       <div
@@ -23,7 +26,7 @@ const Navbar = () => {
         }`}
       >
         <XIcon
-          className="md:hidden absolute top-6 right-6 w-6 h-6 cursor-pointer"
+          className="absolute w-6 h-6 cursor-pointer md:hidden top-6 right-6"
           onClick={() => setIsOpen(!isOpen)}
         />
         <Link
@@ -66,23 +69,25 @@ const Navbar = () => {
           Releases
         </Link>
 
-        <Link
-          onClick={() => {
-            scrollTo(0, 0);
-            setIsOpen(false);
-          }}
-          to="/favourite"
-        >
-          Favourite
-        </Link>
+        {favouriteMovies.length > 0 && (
+          <Link
+            onClick={() => {
+              scrollTo(0, 0);
+              setIsOpen(false);
+            }}
+            to="/favourite"
+          >
+            Favourite
+          </Link>
+        )}
       </div>
 
       <div className="flex items-center gap-8">
-        <SearchIcon className="max-md:hidden w-6 h-6 cursor-pointer" />
+        <SearchIcon className="w-6 h-6 cursor-pointer max-md:hidden" />
         {!user ? (
           <button
             onClick={openSignIn}
-            className="px-4 py-1 sm:px-7 sm:py-2 bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer"
+            className="px-4 py-1 font-medium transition rounded-full cursor-pointer sm:px-7 sm:py-2 bg-primary hover:bg-primary-dull"
           >
             Login
           </button>
@@ -100,7 +105,7 @@ const Navbar = () => {
       </div>
 
       <MenuIcon
-        className="max-md:ml-4 md:hidden w-8 h-8 cursor-pointer"
+        className="w-8 h-8 cursor-pointer max-md:ml-4 md:hidden"
         onClick={() => setIsOpen(!isOpen)}
       />
     </div>
