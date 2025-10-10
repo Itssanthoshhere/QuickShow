@@ -100,12 +100,10 @@ export const getShows = async (req, res) => {
     // Unique movies
     const uniqueShowsMap = new Map();
     shows.forEach((show) => {
-      if (show.movie) {
-        uniqueShowsMap.set(show.movie._id.toString(), show.movie);
-      }
+      uniqueShowsMap.set(show.movie._id.toString(), show.movie);
     });
 
-    res.json({ success: true, movies: Array.from(uniqueShowsMap.values()) });
+    res.json({ success: true, shows: Array.from(uniqueShowsMap.values()) });
   } catch (error) {
     console.error(error);
     res.json({ success: false, message: error.message });
@@ -117,18 +115,12 @@ export const getShow = async (req, res) => {
   try {
     const { movieId } = req.params;
 
-    const [shows, movie] = await Promise.all([
-      Show.find({
-        movie: movieId,
-        showDateTime: { $gte: new Date() },
-      }),
-      Movie.findById(movieId),
-    ]);
+    const shows = await Show.find({
+      movie: movieId,
+      showDateTime: { $gte: new Date() },
+    });
 
-    if (!movie) {
-      return res.status(404).json({ success: false, message: "Movie not found" });
-    }
-
+    const movie = await Movie.findById(movieId);
     const dateTime = {};
 
     shows.forEach((show) => {
