@@ -62,12 +62,15 @@ const Dashboard = () => {
 
       if (data.success) {
         setDashboardData(data.dashboardData);
-        setLoading(false);
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Error fetching dashboard data");
+      toast.error(
+        error?.response?.data?.message || "Error fetching dashboard data"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
