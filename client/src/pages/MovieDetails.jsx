@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { dummyDateTimeData, dummyShowsData } from "../assets/assets";
 import BlurCircle from "../components/BlurCircle";
 import { Heart, PlayCircleIcon, StarIcon } from "lucide-react";
 import timeFormat from "../lib/timeFormat";
@@ -130,12 +129,17 @@ const MovieDetails = () => {
         <div className="flex items-center gap-4 px-4 w-max">
           {show.movie.casts.slice(0, 12).map((cast, index) => (
             <div key={index} className="flex flex-col items-center text-center">
-              <img
-                src={image_base_url + cast.profile_path}
-                alt=""
-                className="object-cover h-20 rounded-full md:h-20 aspect-square"
-              />
-
+              {cast.profile_path ? (
+                <img
+                  src={image_base_url + cast.profile_path}
+                  alt=""
+                  className="object-cover h-20 rounded-full md:h-20 aspect-square"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-20 bg-gray-700 rounded-full md:h-20 aspect-square">
+                  <span className="text-xs text-gray-400">No Image</span>
+                </div>
+              )}
               <p className="mt-3 text-xs font-medium">{cast.name}</p>
             </div>
           ))}
