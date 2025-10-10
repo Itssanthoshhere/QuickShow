@@ -67,7 +67,7 @@ const Dashboard = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Error fetching dashboard data:", error);
+      toast.error(error?.response?.data?.message || "Error fetching dashboard data");
     }
   };
 
