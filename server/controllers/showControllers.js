@@ -100,10 +100,12 @@ export const getShows = async (req, res) => {
     // Unique movies
     const uniqueShowsMap = new Map();
     shows.forEach((show) => {
-      uniqueShowsMap.set(show.movie._id.toString(), show.movie);
+      if (show.movie) {
+        uniqueShowsMap.set(show.movie._id.toString(), show.movie);
+      }
     });
 
-    res.json({ success: true, shows: Array.from(uniqueShowsMap.values()) });
+    res.json({ success: true, movies: Array.from(uniqueShowsMap.values()) });
   } catch (error) {
     console.error(error);
     res.json({ success: false, message: error.message });
