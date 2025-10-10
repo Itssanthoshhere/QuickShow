@@ -51,10 +51,10 @@ export const updateFavourite = async (req, res) => {
 };
 
 // API Controller Function to Get Favourite Movie
-export const getFavourites = async () => {
+export const getFavourites = async (req, res) => {
   try {
     const user = await clerkClient.users.getUser(req.auth().userId);
-    const favourites = user.privateMetadata.favourites;
+    const favourites = user.privateMetadata?.favourites || [];
 
     // Getting movies from database
     const movies = await Movie.find({ _id: { $in: favourites } });
