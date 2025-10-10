@@ -101,7 +101,7 @@ export const getShows = async (req, res) => {
     const uniqueShows = new Set(shows.map((show) => show.movie));
 
     res.json({ success: true, shows: Array.from(uniqueShows) });
-  } catch {
+  } catch (error) {
     console.error(error);
     res.json({ success: false, message: error.message });
   }
@@ -123,14 +123,14 @@ export const getShow = async (req, res) => {
 
     shows.forEach((show) => {
       const date = show.showDateTime.toISOString().split("T")[0];
-      if (!!dateTime[date]) {
+      if (!dateTime[date]) {
         dateTime[date] = [];
       }
       dateTime[date].push({ time: show.showDateTime, showId: show._id });
     });
 
     res.json({ success: true, movie, dateTime });
-  } catch {
+  } catch (error) {
     console.error(error);
     res.json({ success: false, message: error.message });
   }
