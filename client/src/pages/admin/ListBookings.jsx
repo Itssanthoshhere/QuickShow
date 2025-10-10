@@ -12,31 +12,51 @@ const ListBookings = () => {
 
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const getAllBookings = async () => {
     // setBookings(dummyBookingData);
     // setIsLoading(false);
 
+    const abortController = new AbortController();
+    setError(null);
+
     try {
+      const token = await getToken();
+      if (!token) {
+        throw new Error("Authentication token not available");
+      }
       const { data } = await axios.get("/api/admin/all-bookings", {
-        headers: { Authorization: `Bearer ${await getToken()}` },
+        headers: { Authorization: `Bearer ${token}` },
+        signal: abortController.signal,
       });
       setBookings(data.bookings);
     } catch (error) {
-      console.error(error);
+      if (error.name !== "AbortError") {
+        console.error(error);
+        setError("Failed to load bookings. Please try again.");
+      }
     }
     setIsLoading(false);
+    return () => abortController.abort();
   };
 
   useEffect(() => {
+    let cleanup;
     if (user) {
-      getAllBookings();
+      cleanup = getAllBookings();
     }
+    return () => cleanup?.();
   }, [user]);
 
   return !isLoading ? (
     <>
       <Title text1="List" text2="Bookings" />
+      {error && (
+        <div className="p-4 mb-4 text-red-700 bg-red-100 rounded-md">
+          {error}
+        </div>
+      )}
       <div className="max-w-4xl mt-6 overflow-x-auto">
         <table className="w-full overflow-hidden border-collapse rounded-md text-nowrap">
           <thead>
