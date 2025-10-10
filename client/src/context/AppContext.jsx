@@ -31,6 +31,11 @@ export const AppProvider = ({ children }) => {
       }
     } catch (error) {
       console.error(error);
+      setIsAdmin(false);
+      if (location.pathname.startsWith("/admin")) {
+        toast.error("Unable to verify admin access. Please try again.");
+        navigate("/");
+      }
     }
   };
 
