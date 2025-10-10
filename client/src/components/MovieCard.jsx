@@ -1,25 +1,28 @@
 import { StarIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import timeFormat from "../lib/timeFormat";
+import { useAppContext } from "../context/AppContext";
 
 const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
 
+  const { image_base_url } = useAppContext();
+
   return (
-    <div className="flex flex-col justify-between p-3 bg-gray-800 rounded-2xl hover:-translate-y-1 transition duration-300 w-66">
+    <div className="flex flex-col justify-between p-3 transition duration-300 bg-gray-800 rounded-2xl hover:-translate-y-1 w-66">
       <img
         onClick={() => {
           navigate(`/movies/${movie._id}`);
           window.scrollTo(0, 0);
         }}
-        src={movie.backdrop_path}
+        src={image_base_url + movie.backdrop_path}
         alt={`${movie.title} poster`}
-        className="rounded-lg h-52 w-full object-cover object-right-bottom cursor-pointer"
+        className="object-cover object-right-bottom w-full rounded-lg cursor-pointer h-52"
       />
 
-      <p className="font-semibold mt-2 truncate">{movie.title}</p>
+      <p className="mt-2 font-semibold truncate">{movie.title}</p>
 
-      <p className="text-sm text-gray-400 mt-2">
+      <p className="mt-2 text-sm text-gray-400">
         {movie.release_date
           ? new Date(movie.release_date).getFullYear()
           : "N/A"}{" "}
@@ -33,17 +36,17 @@ const MovieCard = ({ movie }) => {
         • {movie.runtime ? timeFormat(movie.runtime) : "N/A"}
       </p>
 
-      <div className="flex items-center justify-between mt-4 pb-3">
+      <div className="flex items-center justify-between pb-3 mt-4">
         <button
           onClick={() => {
             navigate(`/movies/${movie._id}`);
             window.scrollTo(0, 0);
           }}
-          className="px-4 py-2 text-xs bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer"
+          className="px-4 py-2 text-xs font-medium transition rounded-full cursor-pointer bg-primary hover:bg-primary-dull"
         >
           Buy Tickets
         </button>
-        <p className="flex items-center gap-1 text-sm text-gray-400 mt-1 pr-1">
+        <p className="flex items-center gap-1 pr-1 mt-1 text-sm text-gray-400">
           <StarIcon className="w-4 h-4 text-primary fill-primary" />{" "}
           {movie.vote_average?.toFixed(1) || "N/A"}
         </p>
