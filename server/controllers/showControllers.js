@@ -117,12 +117,18 @@ export const getShow = async (req, res) => {
   try {
     const { movieId } = req.params;
 
-    const shows = await Show.find({
-      movie: movieId,
-      showDateTime: { $gte: new Date() },
-    });
+    const [shows, movie] = await Promise.all([
+      Show.find({
+        movie: movieId,
+        showDateTime: { $gte: new Date() },
+      }),
+      Movie.findById(movieId),
+    ]);
 
-    const movie = await Movie.findById(movieId);
+    if (!movie) {
+      return res.status(404).json({ success: false, message: "Movie not found" });
+    }
+
     const dateTime = {};
 
     shows.forEach((show) => {
