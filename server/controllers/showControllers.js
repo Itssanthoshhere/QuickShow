@@ -89,3 +89,58 @@ export const addShow = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
+// API to get all shows from the database
+export const getShows = async (req, res) => {
+  try {
+    const shows = await Show.find({ showDateTime: { $gte: new Date() } })
+      .populate("movie")
+      .sort({ showDateTime: 1 });
+
+    // Unique movies
+    const uniqueShowsMap = new Map();
+    shows.forEach((show) => {
+      if (show.movie) {
+        uniqueShowsMap.set(show.movie._id.toString(), show.movie);
+      }
+    });
+
+    res.json({ success: true, movies: Array.from(uniqueShowsMap.values()) });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// API to get a single show from the database
+export const getShow = async (req, res) => {
+  try {
+    const { movieId } = req.params;
+
+    const [shows, movie] = await Promise.all([
+      Show.find({
+        movie: movieId,
+        showDateTime: { $gte: new Date() },
+      }),
+      Movie.findById(movieId),
+    ]);
+
+    if (!movie) {
+      return res.status(404).json({ success: false, message: "Movie not found" });
+    }
+
+    const dateTime = {};
+
+    shows.forEach((show) => {
+      const date = show.showDateTime.toISOString().split("T")[0];
+      if (!dateTime[date]) dateTime[date] = [];
+      const timeStr = show.showDateTime.toISOString().split("T")[1].slice(0, 5);
+      dateTime[date].push({ time: timeStr, showId: show._id });
+    });
+
+    res.json({ success: true, movie, dateTime });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: error.message });
+  }
+};
