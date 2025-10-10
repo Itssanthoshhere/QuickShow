@@ -76,6 +76,9 @@ export const AppProvider = ({ children }) => {
     if (user) {
       fetchIsAdmin();
       fetchFavouriteMovies();
+    } else {
+      setIsAdmin(false);
+      setFavouriteMovies([]);
     }
   }, [user]);
 
