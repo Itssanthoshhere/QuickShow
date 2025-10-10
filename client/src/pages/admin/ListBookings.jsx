@@ -6,7 +6,7 @@ import { dateFormat } from "../../lib/dateFormat";
 import { useAppContext } from "../../context/AppContext";
 
 const ListBookings = () => {
-  const { axios, getToken, user, image_base_url } = useAppContext();
+  const { axios, getToken, user } = useAppContext();
 
   const currency = import.meta.env.VITE_CURRENCY;
 
