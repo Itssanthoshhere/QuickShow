@@ -1,7 +1,6 @@
 import axios from "axios";
 import Movie from "../models/Movie.js";
 import Show from "../models/Show.js";
-import e from "express";
 
 // API to get now playing movies from TMDB API
 export const getNowPlayingMovies = async (req, res) => {
