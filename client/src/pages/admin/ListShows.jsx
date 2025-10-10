@@ -28,7 +28,7 @@ const ListShows = () => {
       //   },
       // ]);
 
-      const { data } = await axios.get("/api/admin/alla-shows", {
+      const { data } = await axios.get("/api/admin/all-shows", {
         headers: { Authorization: `Bearer ${await getToken()}` },
       });
 
