@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import BlurCircle from "../components/BlurCircle";
 import timeFormat from "../lib/timeFormat";
@@ -13,7 +13,7 @@ const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getMyBookings = async () => {
+  const getMyBookings = useCallback(async () => {
     try {
       const { data } = await axios.get("/api/user/bookings", {
         headers: { Authorization: `Bearer ${await getToken()}` },
@@ -23,16 +23,18 @@ const MyBookings = () => {
         setBookings(data.bookings);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     setIsLoading(false);
-  };
+  }, [axios, getToken]);
 
   useEffect(() => {
     if (user) {
       getMyBookings();
+    } else {
+      setIsLoading(false);
     }
-  }, [user]);
+  }, [user, getMyBookings]);
 
   return !isLoading ? (
     <div className="relative px-6 md:px-16 lg:px-40 pt-30 md:pt-40 min-h-[80vh]">
