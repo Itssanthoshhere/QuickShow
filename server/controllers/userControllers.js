@@ -20,7 +20,7 @@ export const getUserBookings = async (req, res) => {
 };
 
 // API Controller Function to Update Favourite Movie in Clerk User Metadata
-export const updateFavourite = async () => {
+export const updateFavourite = async (req, res) => {
   try {
     const { movieId } = req.body;
     const userId = req.auth().userId;
