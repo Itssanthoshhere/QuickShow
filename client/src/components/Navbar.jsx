@@ -77,7 +77,7 @@ const Navbar = () => {
             }}
             to="/favourite"
           >
-            Favourite
+            Favourites
           </Link>
         )}
       </div>
