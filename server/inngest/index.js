@@ -153,7 +153,7 @@ const sendShowReminders = inngest.createFunction(
     // Prepare reminder tasks
     const reminderTasks = await step.run("prepare-reminder-tasks", async () => {
       const shows = await Show.find({
-        showTime: { $gte: windowStart, $lte: in8Hours },
+        showDateTime: { $gte: windowStart, $lte: in8Hours },
       }).populate("movie");
 
       const tasks = [];
@@ -175,7 +175,7 @@ const sendShowReminders = inngest.createFunction(
             userEmail: user.email,
             userName: user.name,
             movieTitle: show.movie.title,
-            showTime: show.showTime,
+            showTime: show.showDateTime,
           });
         }
       }
@@ -200,15 +200,15 @@ const sendShowReminders = inngest.createFunction(
     <h3 style="color: #F84565; margin: 10px 0;">"${task.movieTitle}"</h3>
 
     <p>
-      is scheduled for 
+      is scheduled for
       <strong>
-        ${new Date(task.showTime).toLocaleDateString("en-US", {
+        ${new Date(task.showDateTime).toLocaleDateString("en-US", {
           timeZone: "Asia/Kolkata",
         })}
-      </strong> 
-      at 
+      </strong>
+      at
       <strong>
-        ${new Date(task.showTime).toLocaleTimeString("en-US", {
+        ${new Date(task.showDateTime).toLocaleTimeString("en-US", {
           timeZone: "Asia/Kolkata",
         })}
       </strong>.
