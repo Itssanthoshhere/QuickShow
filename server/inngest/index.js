@@ -79,7 +79,7 @@ const releaseSeatsAndDeleteBooking = inngest.createFunction(
       // If payment is not made, release seats and delete booking
       if (!booking.isPaid) {
         const show = await Show.findById(booking.show);
-        booking.bookedSeats.forEach(() => {
+        booking.bookedSeats.forEach((seat) => {
           delete show.occupiedSeats[seat];
         });
 
@@ -88,6 +88,22 @@ const releaseSeatsAndDeleteBooking = inngest.createFunction(
         await Booking.findByIdAndDelete(booking._id);
       }
     });
+  }
+);
+
+// Inngest Function to send email when user books a show
+const sendBookingConfirmationEmail = inngest.createFunction(
+  { id: "send-booking-confirmation-email" },
+  { event: "app/show.booked" },
+  async ({ event, step }) => {
+    const { bookingId } = event.data;
+
+    const booking = await Booking.findById(bookingId)
+      .populate({
+        path: "show",
+        populate: { path: "movie", model: "Movie" },
+      })
+      .populate("user");
   }
 );
 
