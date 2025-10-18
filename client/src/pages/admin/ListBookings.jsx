@@ -38,15 +38,12 @@ const ListBookings = () => {
       }
     }
     setIsLoading(false);
-    return () => abortController.abort();
   };
 
   useEffect(() => {
-    let cleanup;
     if (user) {
-      cleanup = getAllBookings();
+      getAllBookings();
     }
-    return () => cleanup?.();
   }, [user]);
 
   return !isLoading ? (
@@ -70,21 +67,23 @@ const ListBookings = () => {
           </thead>
 
           <tbody className="text-sm font-light">
-            {bookings.map((item, index) => (
-              <tr
-                key={index}
-                className="border-b border-primary/20 bg-primary/5 even:bg-primary/10"
-              >
-                <td className="p-2 pl-5 min-w-45">{item.user.name}</td>
-                <td className="p-2">{item.show.movie.title}</td>
-                <td className="p-2">{dateFormat(item.show.showDateTime)}</td>
-                <td className="p-2">{item.bookedSeats.join(", ")}</td>
-                <td className="p-2">
-                  {currency}
-                  {item.amount}
-                </td>
-              </tr>
-            ))}
+            {bookings
+              .filter((item) => item && item.user && item.show && item.show.movie) // Filter out null/incomplete data
+              .map((item, index) => (
+                <tr
+                  key={item._id || index}
+                  className="border-b border-primary/20 bg-primary/5 even:bg-primary/10"
+                >
+                  <td className="p-2 pl-5 min-w-45">{item.user?.name || "Unknown User"}</td>
+                  <td className="p-2">{item.show.movie?.title || "Unknown Movie"}</td>
+                  <td className="p-2">{dateFormat(item.show?.showDateTime)}</td>
+                  <td className="p-2">{item.bookedSeats?.join(", ") || "N/A"}</td>
+                  <td className="p-2">
+                    {currency}
+                    {item.amount || 0}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>{" "}

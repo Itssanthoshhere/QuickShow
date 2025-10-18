@@ -8,19 +8,26 @@ const MovieCard = ({ movie }) => {
 
   const { image_base_url } = useAppContext();
 
+  // Guard against null/undefined movie data
+  if (!movie) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col justify-between p-3 transition duration-300 bg-gray-800 rounded-2xl hover:-translate-y-1 w-66">
       <img
         onClick={() => {
-          navigate(`/movies/${movie._id}`);
-          window.scrollTo(0, 0);
+          if (movie._id) {
+            navigate(`/movies/${movie._id}`);
+            window.scrollTo(0, 0);
+          }
         }}
-        src={image_base_url + movie.backdrop_path}
-        alt={`${movie.title} poster`}
+        src={image_base_url + (movie.backdrop_path || movie.poster_path || '')}
+        alt={`${movie.title || 'Movie'} poster`}
         className="object-cover object-right-bottom w-full rounded-lg cursor-pointer h-52"
       />
 
-      <p className="mt-2 font-semibold truncate">{movie.title}</p>
+      <p className="mt-2 font-semibold truncate">{movie.title || 'Untitled Movie'}</p>
 
       <p className="mt-2 text-sm text-gray-400">
         {movie.release_date
@@ -30,6 +37,7 @@ const MovieCard = ({ movie }) => {
         {movie.genres && movie.genres.length > 0
           ? movie.genres
               .slice(0, 2)
+              .filter((genre) => genre && genre.name) // Filter out null genres and genres without names
               .map((genre) => genre.name)
               .join(" | ")
           : "N/A"}
@@ -39,8 +47,10 @@ const MovieCard = ({ movie }) => {
       <div className="flex items-center justify-between pb-3 mt-4">
         <button
           onClick={() => {
-            navigate(`/movies/${movie._id}`);
-            window.scrollTo(0, 0);
+            if (movie._id) {
+              navigate(`/movies/${movie._id}`);
+              window.scrollTo(0, 0);
+            }
           }}
           className="px-4 py-2 text-xs font-medium transition rounded-full cursor-pointer bg-primary hover:bg-primary-dull"
         >

@@ -24,9 +24,12 @@ const FeaturedSection = () => {
       </div>
 
       <div className="flex flex-wrap gap-8 mt-8 max-sm:justify-center">
-        {shows.slice(0, 4).map((show) => (
-          <MovieCard key={show._id} movie={show} />
-        ))}
+        {shows
+          .filter((show) => show && show._id) // Filter out null shows and shows without IDs
+          .slice(0, 4)
+          .map((show) => (
+            <MovieCard key={show._id} movie={show} />
+          ))}
       </div>
 
       <div className="flex justify-center mt-20">
